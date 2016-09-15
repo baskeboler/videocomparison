@@ -1,0 +1,55 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myVideoEntryLabel" data-translate="testappApp.videoEntry.home.createOrEditLabel">Create or edit a Video Entry</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" ng-show="vm.videoEntry.id">
+            <label for="id" data-translate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                    ng-model="vm.videoEntry.id" readonly />
+        </div>
+        <div class="form-group" ng-if="vm.videoEntry.id">
+            <label class="control-label" data-translate="testappApp.videoEntry.video1" for="field_video1">Video 1</label>
+            <!--<input type="text" class="form-control" name="video1" id="field_video1"-->
+                    <!--ng-model="vm.videoEntry.video1"-->
+                     <!--/>-->
+            <div class="btn btn-primary" ngf-select ng-model="vm.file1" name="file" ngf-pattern="'video/*'"
+                 ngf-accept="'video/*'" ngf-max-size="2000MB" ngf-min-height="100"
+                 ngf-resize="{width: 100, height: 100}">Select</div>
+            <button class="btn btn-warning" ng-click="vm.uploadVideo1()">upload</button>
+            <a ng-href="/api/video-entries/{{vm.videoEntry.id}}/first">get video</a>
+        </div>
+        <div class="form-group" ng-if="vm.videoEntry.id">
+            <label class="control-label" data-translate="testappApp.videoEntry.video2" for="field_video2">Video 2</label>
+            <input type="text" class="form-control" name="video2" id="field_video2"
+                    ng-model="vm.videoEntry.video2"
+                     />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="testappApp.videoEntry.description" for="field_description">Description</label>
+            <input type="text" class="form-control" name="description" id="field_description"
+                    ng-model="vm.videoEntry.description"
+                     />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="testappApp.videoEntry.title" for="field_title">Title</label>
+            <input type="text" class="form-control" name="title" id="field_title"
+                    ng-model="vm.videoEntry.title"
+                     />
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span data-translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

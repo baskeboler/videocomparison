@@ -1,0 +1,27 @@
+{
+    "fluentMethods": true,
+    "relationships": [],
+    "fields": [
+        {
+            "fieldName": "video1",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "video2",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "description",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "title",
+            "fieldType": "String"
+        }
+    ],
+    "changelogDate": "20160914165901",
+    "dto": "mapstruct",
+    "service": "serviceClass",
+    "entityTableName": "video_entry",
+    "pagination": "pager"
+}

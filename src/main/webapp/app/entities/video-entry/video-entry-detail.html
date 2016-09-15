@@ -1,0 +1,50 @@
+
+<div>
+    <h2><span data-translate="testappApp.videoEntry.detail.title">Video Entry</span> {{vm.videoEntry.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span data-translate="testappApp.videoEntry.video1">Video 1</span></dt>
+        <dd>
+            <span>{{vm.videoEntry.video1}}</span>
+        </dd>
+        <dt><span data-translate="testappApp.videoEntry.video2">Video 2</span></dt>
+        <dd>
+            <span>{{vm.videoEntry.video2}}</span>
+        </dd>
+        <dt><span data-translate="testappApp.videoEntry.description">Description</span></dt>
+        <dd>
+            <span>{{vm.videoEntry.description}}</span>
+        </dd>
+        <dt><span data-translate="testappApp.videoEntry.title">Title</span></dt>
+        <dd>
+            <span>{{vm.videoEntry.title}}</span>
+        </dd>
+    </dl>
+    <videogular >
+        <vg-media vg-src="vm.video1Config.sources"></vg-media>
+        <vg-controls>
+            <vg-play-pause-button></vg-play-pause-button>
+            <vg-time-display>{{ currentTime | date:'mm:ss' }}</vg-time-display>
+            <vg-scrub-bar>
+                <vg-scrub-bar-current-time></vg-scrub-bar-current-time>
+            </vg-scrub-bar>
+            <vg-time-display>{{ timeLeft | date:'mm:ss' }}</vg-time-display>
+            <vg-volume>
+                <vg-mute-button></vg-mute-button>
+                <vg-volume-bar></vg-volume-bar>
+            </vg-volume>
+            <vg-fullscreen-button></vg-fullscreen-button>
+        </vg-controls>
+    </videogular>
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span data-translate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button" ui-sref="video-entry-detail.edit({id:vm.videoEntry.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-xs hidden-sm" data-translate="entity.action.edit"> Edit</span>
+    </button>
+</div>

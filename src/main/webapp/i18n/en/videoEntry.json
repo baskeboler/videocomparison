@@ -1,0 +1,25 @@
+{
+    "testappApp": {
+        "videoEntry" : {
+            "home": {
+                "title": "Video Entries",
+                "createLabel": "Create a new Video Entry",
+                "createOrEditLabel": "Create or edit a Video Entry",
+                "search": "Search for Video Entry"
+            },
+            "created": "A new Video Entry is created with identifier {{ param }}",
+            "updated": "A Video Entry is updated with identifier {{ param }}",
+            "deleted": "A Video Entry is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Video Entry {{ id }}?"
+            },
+            "detail": {
+                "title": "Video Entry"
+            },
+            "video1": "Video 1",
+            "video2": "Video 2",
+            "description": "Description",
+            "title": "Title"
+        }
+    }
+}
