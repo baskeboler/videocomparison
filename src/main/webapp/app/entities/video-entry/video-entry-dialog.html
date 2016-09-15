@@ -14,21 +14,26 @@
                     ng-model="vm.videoEntry.id" readonly />
         </div>
         <div class="form-group" ng-if="vm.videoEntry.id">
-            <label class="control-label" data-translate="testappApp.videoEntry.video1" for="field_video1">Video 1</label>
+            <label class="control-label" data-translate="testappApp.videoEntry.video1" for="file1">Video 1</label>
             <!--<input type="text" class="form-control" name="video1" id="field_video1"-->
                     <!--ng-model="vm.videoEntry.video1"-->
                      <!--/>-->
-            <div class="btn btn-primary" ngf-select ng-model="vm.file1" name="file" ngf-pattern="'video/*'"
+            <div class="btn btn-primary" id="file1" ngf-select ng-model="vm.file1" name="file1" ngf-pattern="'video/*'"
                  ngf-accept="'video/*'" ngf-max-size="2000MB" ngf-min-height="100"
                  ngf-resize="{width: 100, height: 100}">Select</div>
-            <button class="btn btn-warning" ng-click="vm.uploadVideo1()">upload</button>
+            <button class="btn btn-warning" type="button" ng-click="vm.uploadVideo1()">upload</button>
             <a ng-href="/api/video-entries/{{vm.videoEntry.id}}/first">get video</a>
+            <uib-progressbar class="progress-striped" max-param="100" value="vm.progress1">{{vm.progress1}} % uploaded</uib-progressbar>
         </div>
         <div class="form-group" ng-if="vm.videoEntry.id">
             <label class="control-label" data-translate="testappApp.videoEntry.video2" for="field_video2">Video 2</label>
-            <input type="text" class="form-control" name="video2" id="field_video2"
-                    ng-model="vm.videoEntry.video2"
-                     />
+            <div class="btn btn-primary" id="file2" ngf-select ng-model="vm.file2" name="file2" ngf-pattern="'video/*'"
+                 ngf-accept="'video/*'" ngf-max-size="2000MB" ngf-min-height="100"
+                 ngf-resize="{width: 100, height: 100}">Select</div>
+            <button class="btn btn-warning" type="button" ng-click="vm.uploadVideo2()">upload</button>
+            <a ng-href="/api/video-entries/{{vm.videoEntry.id}}/second">get video</a>
+            <uib-progressbar class="progress-striped" max-param="100" value="vm.progress2">{{vm.progress2}} % uploaded</uib-progressbar>
+
         </div>
         <div class="form-group">
             <label class="control-label" data-translate="testappApp.videoEntry.description" for="field_description">Description</label>

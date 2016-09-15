@@ -21,24 +21,24 @@ public class FileStorageService {
     private JHipsterProperties jHipsterProperties;
 
     public boolean existsDirectoryForId(Long id) {
-        return new File(jHipsterProperties.getStorage().getVideosPath() + File.pathSeparator + id).exists();
+        return new File(jHipsterProperties.getStorage().getVideosPath() + File.separator + id).exists();
     }
 
     public String saveVideo(Long id, String fileExtension, InputStream stream) throws IOException {
-        String dirPath = jHipsterProperties.getStorage().getVideosPath() + File.pathSeparator + id;
+        String dirPath = jHipsterProperties.getStorage().getVideosPath() + File.separator + id;
         if (!existsDirectoryForId(id)) {
             File dir = new File(dirPath);
             org.apache.commons.io.FileUtils.forceMkdir(dir);
         }
-        File file = new File(dirPath + File.pathSeparator+ generateFileName(fileExtension));
+        File file = new File(dirPath + File.separator+ generateFileName(fileExtension));
 //        file.createNewFile()
         FileUtils.copyInputStreamToFile(stream, file);
         return file.getAbsolutePath();
     }
 
     public Resource getVideoResource(Long id, String name) {
-        String dirPath = jHipsterProperties.getStorage().getVideosPath() + File.pathSeparator + id;
-        File file = new File(dirPath + File.pathSeparator + name);
+        String dirPath = jHipsterProperties.getStorage().getVideosPath() + File.separator + id;
+        File file = new File(dirPath + File.separator + name);
         return new FileSystemResource(file);
     }
 

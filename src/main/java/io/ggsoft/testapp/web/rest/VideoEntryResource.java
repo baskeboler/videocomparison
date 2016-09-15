@@ -13,18 +13,17 @@ import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.util.StreamUtils;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
 import javax.inject.Inject;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.LinkedList;
@@ -169,23 +168,54 @@ public class VideoEntryResource {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
+
     @RequestMapping(value = "/video-entries/{id}/first",
-    method = RequestMethod.GET)
-    public  void getVideo(@PathVariable Long id, HttpServletResponse servletResponse) throws IOException {
+        method = RequestMethod.GET)
+    public StreamingResponseBody getVideo(@PathVariable Long id, HttpServletResponse servletResponse) throws IOException {
+        return downloadVideo(id, servletResponse);
+    }
+
+    @RequestMapping(value = "/uploads/{id}/first", method = RequestMethod.GET)
+    public ResponseEntity<StreamingResponseBody> getUploadedVideo(@PathVariable Long id, HttpServletResponse servletResponse) throws IOException {
+        StreamingResponseBody body = downloadVideo(id, servletResponse);
+        return ResponseEntity
+            .ok()
+            .contentType(MediaType.parseMediaType("video/mp4"))
+            .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"video.mp4\"")
+            .body(body);
+    }
+
+    private StreamingResponseBody downloadVideo(@PathVariable Long id, HttpServletResponse servletResponse) throws IOException {
         VideoEntryDTO one = videoEntryService.findOne(id);
-        Resource videoResource = new FileSystemResource(one.getVideo1());
+        FileSystemResource videoResource = new FileSystemResource(one.getVideo1());
         InputStream inputStream = videoResource.getInputStream();
-        ServletOutputStream outputStream = servletResponse.getOutputStream();
-        byte[] buffer = new byte[512];
-        int bytesRead = -1;
+//        servletResponse.setContentLength((int) videoResource.contentLength());
+//        servletResponse.setHeader(HttpHeaders.CONTENT_TYPE, "video/*");
+//        servletResponse.setHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" +videoResource.getFilename() + "\"");
+//        ServletOutputStream outputStream = servletResponse.getOutputStream();
+//        byte[] buffer = new byte[512];
+//        int bytesRead = -1;
+//
+//        // write bytes read from the input stream into the output stream
+//        while ((bytesRead = inputStream.read(buffer)) != -1) {
+//            outputStream.write(buffer, 0, bytesRead);
+//        }
+//        outputStream.close();
+//
+//        inputStream.close();
+        return outputStream -> {
+            readAndWrite(inputStream, outputStream);
+        };
+    }
 
-        // write bytes read from the input stream into the output stream
-        while ((bytesRead = inputStream.read(buffer)) != -1) {
-            outputStream.write(buffer, 0, bytesRead);
+    private void readAndWrite(final InputStream is, OutputStream os)
+        throws IOException {
+        byte[] data = new byte[2048];
+        int read = 0;
+        while ((read = is.read(data)) > 0) {
+            os.write(data, 0, read);
         }
-        inputStream.close();
-        outputStream.close();
-
+        os.flush();
     }
 
 }
